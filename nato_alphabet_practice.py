@@ -51,7 +51,7 @@ if len(wrong) > 0:
 else:
     print(f"Your time was {practice_time} seconds.")
 
-    leaderboard_file = "nato_alphabet_leaderboard.txt"
+    leaderboard_file = "leaderboard_nato_alphabet.txt"
     scores = []
     try:
         with open(leaderboard_file, "r") as leaderboard:
