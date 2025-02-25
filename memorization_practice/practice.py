@@ -3,7 +3,9 @@ import time
 import sys
 
 
-def read_file(filename = "alphabets.txt", result = []):
+def read_file(filename = "alphabets.txt", result = None):
+    if result is None:
+        result = []
     try:
         with open(filename, "r") as file:
             for line in file:
@@ -40,12 +42,13 @@ def get_alphabet():
             print(f"{i} : {alphabets[i][0].removesuffix('.txt')}")
         try:
             choice = int(input(""))
-        except TypeError: 
+        except ValueError: 
+            print("Invalid input. Please enter an integer.")
             pass
     return read_file(alphabets[choice][0], {}), alphabets[choice][1]
 
 
-def evaluation(score, wrong, practice_time, leaderboard_file):
+def evaluation(score, wrong, practice_time, alphabet, leaderboard_file):
     print("\nPractice Completed!")
     print(f"You scored: {score} / {len(alphabet)}, which is {score / len(alphabet) * 100}% accuracy.")
     if len(wrong) > 0:
@@ -89,4 +92,4 @@ def evaluation(score, wrong, practice_time, leaderboard_file):
 
 alphabet, leaderboard_file = get_alphabet()
 score, wrong, practice_time = practice(alphabet=alphabet)
-evaluation(score=score, wrong=wrong, practice_time=practice_time, leaderboard_file=leaderboard_file)
+evaluation(score=score, wrong=wrong, practice_time=practice_time, alphabet=alphabet, leaderboard_file=leaderboard_file)
