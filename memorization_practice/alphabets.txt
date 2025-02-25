@@ -1,0 +1,2 @@
+nato_alphabet.txt|leaderboard_nato_alphabet.txt
+morse_code.txt|leaderboard_morse_code.txt

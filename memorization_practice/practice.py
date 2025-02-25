@@ -1,40 +1,33 @@
 import random
 import time
 
-nato_alphabet = {"A" : "alfa", 
-    "B" : "bravo", 
-    "C" : "charlie", 
-    "D" : "delta", 
-    "E" : "echo", 
-    "F" : "foxtrot", 
-    "G" : "golf", 
-    "H" : "hotel", 
-    "I" : "india", 
-    "J" : "juliett", 
-    "K" : "kilo", 
-    "L" : "lima", 
-    "M" : "mike", 
-    "N" : "november", 
-    "O" : "oscar", 
-    "P" : "papa", 
-    "Q" : "quebec", 
-    "R" : "romeo", 
-    "S" : "sierra", 
-    "T" : "tango", 
-    "U" : "uniform", 
-    "V" : "victor", 
-    "W" : "whiskey", 
-    "X" : "xray", 
-    "Y" : "yankee", 
-    "Z" : "zulu"}
+alphabets = []
+with open("alphabets.txt", "r") as file:
+    for line in file:
+        data, leaderboard = line.rstrip("\n").split("|", 1)
+        alphabets.append((data, leaderboard))
+
+choice = -1
+while choice < 0 or choice >= len(alphabets):
+    print("please choose which alphabet you want to practice:")
+    for i in range(len(alphabets)):
+        print(f"{i} : {alphabets[i][0].removesuffix('.txt')}")
+    choice = int(input(""))
+chosen_alphabet = alphabets[choice]
+
+alphabet = {}
+with open(chosen_alphabet[0], "r") as file:
+    for line in file:
+        key, value = line.rstrip("\n").split("|", 1)
+        alphabet[key] = value
 
 score = 0
 wrong = {}
 
 start_time = time.time()
-for key in random.sample(list(nato_alphabet.keys()), len(nato_alphabet)):
+for key in random.sample(list(alphabet.keys()), len(alphabet)):
     guess = input(f"{key} : ").strip().lower()
-    if guess == nato_alphabet[key]:
+    if guess == alphabet[key]:
         score += 1
     else:
         wrong[key] = guess
@@ -43,15 +36,15 @@ end_time = time.time()
 practice_time = end_time - start_time
 
 print("\nPractice Completed!")
-print(f"You scored: {score} / {len(nato_alphabet)}, which is {score / len(nato_alphabet) * 100}% accuracy.")
+print(f"You scored: {score} / {len(alphabet)}, which is {score / len(alphabet) * 100}% accuracy.")
 if len(wrong) > 0:
     print("Here is a list of all mistakes:")
     for key in wrong.keys():
-        print(f"{key} : correct: {nato_alphabet[key]} your guess: {wrong[key]}")
+        print(f"{key} : correct: {alphabet[key]} your guess: {wrong[key]}")
 else:
     print(f"Your time was {practice_time} seconds.")
 
-    leaderboard_file = "leaderboard_nato_alphabet.txt"
+    leaderboard_file = chosen_alphabet[1]
     scores = []
     try:
         with open(leaderboard_file, "r") as leaderboard:
